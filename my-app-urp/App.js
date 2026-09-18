@@ -7,7 +7,22 @@ import ReanimatedSwipeable from 'react-native-gesture-handler/ReanimatedSwipeabl
 
 function TareaItem({ tarea, onEliminar }) {
   return (
-    <ReanimatedSwipeable overshootRight={false} containerStyle={styles.swipeContenedor}>
+    <ReanimatedSwipeable
+      renderRightActions={() => (
+        <View style={styles.accionContenedor}>
+          <TouchableOpacity
+            style={styles.botonEliminar}
+            onPress={() => onEliminar(tarea.id)}
+            activeOpacity={0.8}
+          >
+            <Ionicons name="trash-outline" size={18} color="#fff" />
+            <Text style={styles.textoEliminar}>Eliminar</Text>
+          </TouchableOpacity>
+        </View>
+      )}
+      overshootRight={false}
+      containerStyle={styles.swipeContenedor}
+    >
       <View style={styles.tarjeta}>
         <Text style={styles.textoTarea}>{tarea.texto}</Text>
       </View>
@@ -144,4 +159,18 @@ const styles = StyleSheet.create({
     paddingVertical: 20,
   },
   textoTarea: { fontSize: 16, color: '#1f2240' },
+  accionContenedor: {
+    width: 100,
+    justifyContent: 'center',
+    alignItems: 'flex-end',
+  },
+  botonEliminar: {
+    width: 84,
+    height: '100%',
+    backgroundColor: '#b91c1c',
+    borderRadius: 16,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  textoEliminar: { color: '#fff', fontSize: 12, fontWeight: '600', marginTop: 2 },
 });
