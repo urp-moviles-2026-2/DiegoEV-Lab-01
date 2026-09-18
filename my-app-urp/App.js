@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { StyleSheet, View, SafeAreaView, Platform, StatusBar as RNStatusBar } from 'react-native';
+import { StyleSheet, Text, View, SafeAreaView, Platform, StatusBar as RNStatusBar } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
+import { Ionicons } from '@expo/vector-icons';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 const MORADO = '#4f46e5';
@@ -19,6 +20,14 @@ export default function App() {
     <GestureHandlerRootView style={{ flex: 1 }}>
       <SafeAreaView style={styles.pantalla}>
         <StatusBar style="dark" />
+
+        {/* Encabezado */}
+        <View style={styles.encabezado}>
+          <View style={styles.logo}>
+            <Ionicons name="checkmark" size={22} color="#fff" />
+          </View>
+          <Text style={styles.titulo}>Tareas</Text>
+        </View>
       </SafeAreaView>
     </GestureHandlerRootView>
   );
@@ -30,4 +39,20 @@ const styles = StyleSheet.create({
     backgroundColor: '#f4f5fb',
     paddingTop: Platform.OS === 'android' ? RNStatusBar.currentHeight : 0,
   },
+  encabezado: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingHorizontal: 20,
+    paddingVertical: 14,
+  },
+  logo: {
+    width: 40,
+    height: 40,
+    borderRadius: 12,
+    backgroundColor: MORADO,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginRight: 12,
+  },
+  titulo: { fontSize: 22, fontWeight: '700', color: '#1f2240' },
 });
