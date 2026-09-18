@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, SafeAreaView, Platform, StatusBar as RNStatusBar } from 'react-native';
+import { StyleSheet, Text, View, TextInput, SafeAreaView, Platform, StatusBar as RNStatusBar } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { Ionicons } from '@expo/vector-icons';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
@@ -21,12 +21,26 @@ export default function App() {
       <SafeAreaView style={styles.pantalla}>
         <StatusBar style="dark" />
 
-        {/* Encabezado */}
         <View style={styles.encabezado}>
           <View style={styles.logo}>
             <Ionicons name="checkmark" size={22} color="#fff" />
           </View>
           <Text style={styles.titulo}>Tareas</Text>
+        </View>
+
+        {/* Formulario */}
+        <View style={styles.formulario}>
+          <View style={styles.inputContenedor}>
+            <Ionicons name="create-outline" size={20} color={MORADO} />
+            <TextInput
+              style={styles.input}
+              placeholder="Escribe una nueva tarea..."
+              placeholderTextColor="#8a8fa8"
+              value={texto}
+              onChangeText={setTexto}
+              returnKeyType="done"
+            />
+          </View>
         </View>
       </SafeAreaView>
     </GestureHandlerRootView>
@@ -55,4 +69,26 @@ const styles = StyleSheet.create({
     marginRight: 12,
   },
   titulo: { fontSize: 22, fontWeight: '700', color: '#1f2240' },
+  formulario: {
+    backgroundColor: '#fff',
+    marginHorizontal: 16,
+    padding: 16,
+    borderRadius: 20,
+    marginBottom: 16,
+  },
+  inputContenedor: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#eef0fb',
+    borderRadius: 12,
+    paddingHorizontal: 16,
+    marginBottom: 12,
+  },
+  input: {
+    flex: 1,
+    marginLeft: 10,
+    paddingVertical: 14,
+    fontSize: 16,
+    color: '#1f2240',
+  },
 });
