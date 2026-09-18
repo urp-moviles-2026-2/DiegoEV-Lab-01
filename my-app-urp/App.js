@@ -16,6 +16,13 @@ export default function App() {
     { id: '5', texto: 'Enviar reporte semanal por correo' },
   ]);
 
+  const agregarTarea = () => {
+    const limpio = texto.trim();
+    if (limpio === '') return;
+    setTareas((prev) => [...prev, { id: Date.now().toString(), texto: limpio }]);
+    setTexto('');
+  };
+
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <SafeAreaView style={styles.pantalla}>
@@ -37,10 +44,11 @@ export default function App() {
               placeholderTextColor="#8a8fa8"
               value={texto}
               onChangeText={setTexto}
+              onSubmitEditing={agregarTarea}
               returnKeyType="done"
             />
           </View>
-          <TouchableOpacity style={styles.botonAnadir} activeOpacity={0.85}>
+          <TouchableOpacity style={styles.botonAnadir} onPress={agregarTarea} activeOpacity={0.85}>
             <Ionicons name="add" size={20} color="#fff" />
             <Text style={styles.textoAnadir}>Añadir tarea</Text>
           </TouchableOpacity>
