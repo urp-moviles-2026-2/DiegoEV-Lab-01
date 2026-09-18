@@ -1,10 +1,21 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, TextInput, TouchableOpacity, FlatList, SafeAreaView, Platform, StatusBar as RNStatusBar } from 'react-native';
+import {
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  FlatList,
+  StyleSheet,
+  SafeAreaView,
+  Platform,
+  StatusBar as RNStatusBar,
+} from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { Ionicons } from '@expo/vector-icons';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import ReanimatedSwipeable from 'react-native-gesture-handler/ReanimatedSwipeable';
 
+/* ---------- Tarjeta de tarea con deslizamiento ---------- */
 function TareaItem({ tarea, onEliminar }) {
   return (
     <ReanimatedSwipeable
@@ -30,8 +41,7 @@ function TareaItem({ tarea, onEliminar }) {
   );
 }
 
-const MORADO = '#4f46e5';
-
+/* ---------- Pantalla principal ---------- */
 export default function App() {
   const [texto, setTexto] = useState('');
   const [tareas, setTareas] = useState([
@@ -44,7 +54,7 @@ export default function App() {
 
   const agregarTarea = () => {
     const limpio = texto.trim();
-    if (limpio === '') return;
+    if (limpio === '') return; // no agrega vacías ni solo espacios
     setTareas((prev) => [...prev, { id: Date.now().toString(), texto: limpio }]);
     setTexto('');
   };
@@ -58,6 +68,7 @@ export default function App() {
       <SafeAreaView style={styles.pantalla}>
         <StatusBar style="dark" />
 
+        {/* Encabezado */}
         <View style={styles.encabezado}>
           <View style={styles.logo}>
             <Ionicons name="checkmark" size={22} color="#fff" />
@@ -65,6 +76,7 @@ export default function App() {
           <Text style={styles.titulo}>Tareas</Text>
         </View>
 
+        {/* Formulario */}
         <View style={styles.formulario}>
           <View style={styles.inputContenedor}>
             <Ionicons name="create-outline" size={20} color={MORADO} />
@@ -78,16 +90,23 @@ export default function App() {
               returnKeyType="done"
             />
           </View>
-          <TouchableOpacity style={styles.botonAnadir} onPress={agregarTarea} activeOpacity={0.85}>
+          <TouchableOpacity
+            style={styles.botonAnadir}
+            onPress={agregarTarea}
+            activeOpacity={0.85}
+          >
             <Ionicons name="add" size={20} color="#fff" />
             <Text style={styles.textoAnadir}>Añadir tarea</Text>
           </TouchableOpacity>
         </View>
 
+        {/* Lista con scroll */}
         <FlatList
           data={tareas}
           keyExtractor={(item) => item.id}
-          renderItem={({ item }) => <TareaItem tarea={item} onEliminar={eliminarTarea} />}
+          renderItem={({ item }) => (
+            <TareaItem tarea={item} onEliminar={eliminarTarea} />
+          )}
           contentContainerStyle={styles.lista}
           showsVerticalScrollIndicator={false}
           keyboardShouldPersistTaps="handled"
@@ -96,6 +115,9 @@ export default function App() {
     </GestureHandlerRootView>
   );
 }
+
+/* ---------- Estilos ---------- */
+const MORADO = '#4f46e5';
 
 const styles = StyleSheet.create({
   pantalla: {
@@ -119,6 +141,7 @@ const styles = StyleSheet.create({
     marginRight: 12,
   },
   titulo: { fontSize: 22, fontWeight: '700', color: '#1f2240' },
+
   formulario: {
     backgroundColor: '#fff',
     marginHorizontal: 16,
@@ -150,6 +173,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   textoAnadir: { color: '#fff', fontSize: 16, fontWeight: '600', marginLeft: 6 },
+
   lista: { paddingHorizontal: 16, paddingBottom: 24 },
   swipeContenedor: { marginBottom: 12 },
   tarjeta: {
@@ -159,6 +183,7 @@ const styles = StyleSheet.create({
     paddingVertical: 20,
   },
   textoTarea: { fontSize: 16, color: '#1f2240' },
+
   accionContenedor: {
     width: 100,
     justifyContent: 'center',
