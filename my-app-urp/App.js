@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, TextInput, SafeAreaView, Platform, StatusBar as RNStatusBar } from 'react-native';
+import { StyleSheet, Text, View, TextInput, TouchableOpacity, SafeAreaView, Platform, StatusBar as RNStatusBar } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { Ionicons } from '@expo/vector-icons';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
@@ -28,7 +28,6 @@ export default function App() {
           <Text style={styles.titulo}>Tareas</Text>
         </View>
 
-        {/* Formulario */}
         <View style={styles.formulario}>
           <View style={styles.inputContenedor}>
             <Ionicons name="create-outline" size={20} color={MORADO} />
@@ -41,6 +40,10 @@ export default function App() {
               returnKeyType="done"
             />
           </View>
+          <TouchableOpacity style={styles.botonAnadir} activeOpacity={0.85}>
+            <Ionicons name="add" size={20} color="#fff" />
+            <Text style={styles.textoAnadir}>Añadir tarea</Text>
+          </TouchableOpacity>
         </View>
       </SafeAreaView>
     </GestureHandlerRootView>
@@ -91,4 +94,13 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: '#1f2240',
   },
+  botonAnadir: {
+    flexDirection: 'row',
+    backgroundColor: MORADO,
+    borderRadius: 12,
+    paddingVertical: 14,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  textoAnadir: { color: '#fff', fontSize: 16, fontWeight: '600', marginLeft: 6 },
 });
