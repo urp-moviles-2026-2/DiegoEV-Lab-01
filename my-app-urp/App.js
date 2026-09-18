@@ -4,7 +4,7 @@ import { StatusBar } from 'expo-status-bar';
 import { Ionicons } from '@expo/vector-icons';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
-function TareaItem({ tarea }) {
+function TareaItem({ tarea, onEliminar }) {
   return (
     <View style={styles.swipeContenedor}>
       <View style={styles.tarjeta}>
@@ -31,6 +31,10 @@ export default function App() {
     if (limpio === '') return;
     setTareas((prev) => [...prev, { id: Date.now().toString(), texto: limpio }]);
     setTexto('');
+  };
+
+  const eliminarTarea = (id) => {
+    setTareas((prev) => prev.filter((t) => t.id !== id));
   };
 
   return (
@@ -64,11 +68,10 @@ export default function App() {
           </TouchableOpacity>
         </View>
 
-        {/* Lista con scroll */}
         <FlatList
           data={tareas}
           keyExtractor={(item) => item.id}
-          renderItem={({ item }) => <TareaItem tarea={item} />}
+          renderItem={({ item }) => <TareaItem tarea={item} onEliminar={eliminarTarea} />}
           contentContainerStyle={styles.lista}
           showsVerticalScrollIndicator={false}
           keyboardShouldPersistTaps="handled"
