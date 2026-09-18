@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, TextInput, TouchableOpacity, SafeAreaView, Platform, StatusBar as RNStatusBar } from 'react-native';
+import { StyleSheet, Text, View, TextInput, TouchableOpacity, FlatList, SafeAreaView, Platform, StatusBar as RNStatusBar } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { Ionicons } from '@expo/vector-icons';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
-/* ---------- Tarjeta de tarea ---------- */
 function TareaItem({ tarea }) {
   return (
     <View style={styles.swipeContenedor}>
@@ -64,6 +63,16 @@ export default function App() {
             <Text style={styles.textoAnadir}>Añadir tarea</Text>
           </TouchableOpacity>
         </View>
+
+        {/* Lista con scroll */}
+        <FlatList
+          data={tareas}
+          keyExtractor={(item) => item.id}
+          renderItem={({ item }) => <TareaItem tarea={item} />}
+          contentContainerStyle={styles.lista}
+          showsVerticalScrollIndicator={false}
+          keyboardShouldPersistTaps="handled"
+        />
       </SafeAreaView>
     </GestureHandlerRootView>
   );
@@ -122,6 +131,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   textoAnadir: { color: '#fff', fontSize: 16, fontWeight: '600', marginLeft: 6 },
+  lista: { paddingHorizontal: 16, paddingBottom: 24 },
   swipeContenedor: { marginBottom: 12 },
   tarjeta: {
     backgroundColor: '#fff',
